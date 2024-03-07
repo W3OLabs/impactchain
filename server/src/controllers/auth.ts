@@ -9,7 +9,18 @@ export const register = async (req: Request, res: Response) => {
     const { email, password, username } = req.body;
 
     if (!email || !password || !username) {
-      return res.sendStatus(400);
+      return res.status(400).json({ message: "Invalid data" });
+    }
+    if (username === ""  || email === "" || password === "") {
+      return res.status(400).json({ message: "Invalid data: Empty fields" });
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+      return res.status(400).json({ message: "Invalid email" });
+    }
+    if (password.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
     }
     const user = await getUserByEmail(email);
     if (user) {
@@ -66,5 +77,6 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "Logged out" });
+  res.clearCookie("IMPACT_CHAIN_JWT");
+  res.status(200).json({ message: "User logged out" });
 };
