@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 
-import { canisterId, idlFactory } from "./declarations/data_backend";
-import { _SERVICE } from "./declarations/data_backend/data_backend.did";
+import { canisterId, idlFactory } from "./declarations/impact_chain_data";
+import { _SERVICE } from "./declarations/impact_chain_data/impact_chain_data.did";
 
 const network = import.meta.env.DFX_NETWORK || "local";
 const localhost = "http://localhost:4943";
@@ -18,7 +18,12 @@ interface AuthContextType {
   dataActor: ActorSubclass<_SERVICE> | null;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const initialContext: AuthContextType = {
+  dataActor: null,
+};
+
+
+const AuthContext = createContext<AuthContextType>(initialContext);
 
 export const useAuthClient = () => {
   const [dataActor, setBackendActor] = useState<ActorSubclass<_SERVICE> | null>(
@@ -30,22 +35,22 @@ export const useAuthClient = () => {
   }, []);
 
   async function updateClient() {
-    // let agent = new HttpAgent({
-    //   host: network === "local" ? localhost : host,
-    // });
+    let agent = new HttpAgent({
+      host: network === "local" ? localhost : host,
+    });
 
-    // if (network === "local") {
-    //   agent.fetchRootKey();
-    // }
+    if (network === "local") {
+      agent.fetchRootKey();
+    }
 
-    // const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(
-    //   idlFactory,
-    //   {
-    //     agent,
-    //     canisterId: canisterId,
-    //   }
-    // );
-    // setBackendActor(_backendActor);
+    const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(
+      idlFactory,
+      {
+        agent,
+        canisterId: canisterId,
+      }
+    );
+    setBackendActor(_backendActor);
   }
 
   return {

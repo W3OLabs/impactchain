@@ -2,6 +2,7 @@ import { createUser, getUserByEmail } from "../db/users";
 import { Request, Response } from "express";
 import "dotenv/config";
 import { generateToken } from "../helpers";
+import otpGenerator from "otp-generator"
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -66,5 +67,21 @@ export const login = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  res.status(200).json({ message: "Logged out" });
+  res.clearCookie("token").sendStatus(200);
 };
+
+export async function generateOTP (req: Request, res: Response) {
+ req.app.locals.OTP =  otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, digits: true });
+  res.status(200).send({code: req.app.locals.OTP})
+}
+
+export const verifyOTP = async (req: Request, res: Response) => {
+  const { code } = req.query;
+  if (code === req.app.locals.OTP) {
+    req.app.locals.OTP = null;
+  req.app.locals.resetSession = true;
+    res.status(201).json({ message: "OTP verified" });
+  } else {
+    res.status(400).json({ message: "Invalid OTP" });
+  }
+}

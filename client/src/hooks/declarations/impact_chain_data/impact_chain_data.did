@@ -1,0 +1,44 @@
+type email = text;
+type WaterEffiency = 
+ record {
+   iotDevice: opt IOTDevice;
+   waterEfficiencyGoal: opt text;
+   waterStatemet: opt text;
+ };
+type WaterDischarge = 
+ record {
+   iotDevice: opt IOTDevice;
+   waterDischargeGoal: opt text;
+   waterDischargePermit: opt text;
+ };
+type UserRecord = 
+ record {
+   email: text;
+   impactTarget: vec ImpactTarget;
+   waterDischarge: WaterDischarge;
+   waterEffiency: WaterEffiency;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: UserRecord;
+ };
+type ImpactTarget = 
+ record {
+   id: text;
+   measurements: vec text;
+   name: text;
+ };
+type IOTDevice = 
+ record {
+   id: text;
+   ipAdress: text;
+   name: text;
+   platform: text;
+ };
+service : {
+  addUserRecord: (email, UserRecord) -> ();
+  getUserRecord: (email) -> (Result) query;
+  removeUserRecord: (email) -> ();
+  updateUserRecord: (email, UserRecord) -> ();
+}

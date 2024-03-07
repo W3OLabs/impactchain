@@ -1,4 +1,4 @@
-import { getUserBySessionToken } from "../db/users";
+import { getUserByEmail, getUserBySessionToken } from "../db/users";
 import { NextFunction, Request, Response } from "express";
 import { get, merge } from "lodash";
 
@@ -50,3 +50,29 @@ export const isOwner = async (
     return res.sendStatus(400);
   }
 };
+
+export const verifyUser = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email} = req.body;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    };
+
+    const user = getUserByEmail(email);
+    if (!user) {
+      return res.status(400).json({ message: "User does not exist" });
+    }
+    return next();
+  } catch (error) {
+    console.log("error in verifyUser middleware: ", error);
+    return res.sendStatus(400);
+  }
+}
+
+export const localVariables = (req: Request, res: Response, next: NextFunction) => {
+  req.app.locals = {
+    OTP: null,
+    resetSession: false,
+  };
+  next();
+}
