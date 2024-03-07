@@ -1,18 +1,22 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoutes from "./data/Routes";
 import LoadingScreen from "./components/LoadingScreen";
 import Layout from "./components/Layout";
-import Login from "./pages/login/Login";
-import Home from "./pages/home/Home";
-import Dashboard from "./pages/dashboard/Dashboard";
-import Analytics from "./pages/analytics/Analytics";
-import AskAI from "./pages/askai/AskAI";
-import CarbonCredits from "./pages/carbon-credits/CarbonCredits";
-import LandingPage from "./pages/landing/Landing";
-import Notfound from "./components/Notfound";
 import { RootState } from "./redux/store";
 import { useSelector } from "react-redux";
+
+// Pages
+const Home = lazy(() => import("./pages/home/Home"));
+const Login = lazy(() => import("./pages/login/Login"));
+const Register = lazy(() => import("./pages/register/Register"));
+const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
+const Analytics = lazy(() => import("./pages/analytics/Analytics"));
+const AskAI = lazy(() => import("./pages/askai/AskAI"));
+const CarbonCredits = lazy(() => import("./pages/carbon-credits/CarbonCredits"));
+const LandingPage = lazy(() => import("./pages/landing/Landing"));
+const Notfound = lazy(() => import("./components/Notfound"));
+const ResetPassword = lazy(() => import("./pages/reset/ResetPassword"));
 
 const App = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.app);
@@ -21,9 +25,8 @@ const App = () => {
     if (isAuthenticated) {
       console.log("User is authenticated");
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated]); 
 
-  console.log(isAuthenticated);
   return (
     <BrowserRouter>
       <Suspense fallback={<LoadingScreen />}>
@@ -47,6 +50,11 @@ const App = () => {
             path="/login"
             element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
           />
+           <Route
+            path="/signup"
+            element={isAuthenticated ? <Navigate to="/home" /> : <Register />}
+          />
+          <Route path="/forgot-password" element={<ResetPassword/>} />
           <Route path="*" element={<Notfound />} />
         </Routes>
       </Suspense>

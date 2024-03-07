@@ -30,22 +30,22 @@ export const useAuthClient = () => {
   }, []);
 
   async function updateClient() {
-    let agent = new HttpAgent({
-      host: network === "local" ? localhost : host,
-    });
+    // let agent = new HttpAgent({
+    //   host: network === "local" ? localhost : host,
+    // });
 
-    if (network === "local") {
-      agent.fetchRootKey();
-    }
+    // if (network === "local") {
+    //   agent.fetchRootKey();
+    // }
 
-    const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(
-      idlFactory,
-      {
-        agent,
-        canisterId: canisterId,
-      }
-    );
-    setBackendActor(_backendActor);
+    // const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(
+    //   idlFactory,
+    //   {
+    //     agent,
+    //     canisterId: canisterId,
+    //   }
+    // );
+    // setBackendActor(_backendActor);
   }
 
   return {
