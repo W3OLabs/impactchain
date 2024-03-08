@@ -6,6 +6,13 @@
     "outDir": "dist",
     "sourceMap": true,
     "noImplicitAny": true,
+    "typeRoots": [
+      "./node_module/@types",
+      "./src/types"
+  ],
   },
-  "include": ["src/**/*"],
+  "include": [
+    "src/**/*",
+    "src/types/**/*",
+  ],
 }

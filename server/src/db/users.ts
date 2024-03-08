@@ -5,14 +5,16 @@ interface UserDocument extends Document {
   username: string;
   email: string;
   password: string;
+  isEmailVerified: boolean;
   matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
 const UserSchema = new mongoose.Schema(
   {
     username: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true, unique: true},
     password: { type: String, required: true, select: false },
+    isEmailVerified: { type: Boolean, default: false },
   },
   {
     timestamps: true,
@@ -33,7 +35,7 @@ UserSchema.methods.matchPassword = async function (enteredPassword: string) {
 };
 
 
-const UserModel = mongoose.model<UserDocument>("User", UserSchema);
+export const UserModel = mongoose.model<UserDocument>("User", UserSchema);
 
 export const createUser = (args: Record<string, any>) =>
   new UserModel(args).save().then((user) => user.toObject());

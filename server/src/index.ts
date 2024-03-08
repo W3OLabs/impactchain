@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // app.use(notFound);
-// app.use(errorHandler)
+app.use(errorHandler)
 
 const PORT = 5000;
 
