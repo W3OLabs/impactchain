@@ -16,6 +16,8 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
     "@hookform/resolvers": "^3.3.4",
     "@reduxjs/toolkit": "^2.2.1",
+    "@types/axios": "^0.14.0",
+    "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "process": "^0.11.10",
     "react": "^18.2.0",

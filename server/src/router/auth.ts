@@ -9,6 +9,7 @@ export default (router: Router) => {
   router.post("/auth/register-mail", registerMail)
   router.post("/auth/login", login)
   router.post("/auth/logout", logout)
+  router.post("/auth/authenticate/", verifyUser, (req, res) => res.end())
   router.get("/auth/generate-otp", verifyUser, localVariables, generateOTP)
   router.get("/auth/verify-otp", verifyUser, verifyOTP)
   router.put("/auth/reset-password", verifyUser, resetPassword)
