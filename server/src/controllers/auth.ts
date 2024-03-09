@@ -6,7 +6,6 @@ import otpGenerator from "otp-generator";
 
 export const register = async (req: Request, res: Response) => {
   try {
-    console.log(req.body);
     const { email, password, username } = req.body;
 
     if (!email || !password || !username) {
