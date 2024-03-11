@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface GlobalState {
   isAuthenticated : boolean;
-  userInfo: any;
+  userInfo: any| null;
 }
 
 const initialState: GlobalState = {
   isAuthenticated: false,
-  userInfo: {},
+  userInfo: null,
 };
 
 export const appSlice = createSlice({
@@ -19,10 +19,11 @@ export const appSlice = createSlice({
     },
     setUserInfo : (state: GlobalState, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
+      localStorage.setItem('userInfo', JSON.stringify(action.payload));
     }
   },
 });
 
-export const { setIsAuthenticated} = appSlice.actions;
+export const { setIsAuthenticated, setUserInfo} = appSlice.actions;
 
 export default appSlice.reducer;

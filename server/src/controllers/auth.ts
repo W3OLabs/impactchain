@@ -6,12 +6,12 @@ import otpGenerator from "otp-generator";
 
 export const register = async (req: Request, res: Response) => {
   try {
-    const { email, password, username } = req.body;
+    const { email, password, firstname, lastname } = req.body;
 
-    if (!email || !password || !username) {
+    if (!email || !password || !firstname || !lastname) {
       return res.status(400).json({ message: "Invalid data" });
     }
-    if (username === "" || email === "" || password === "") {
+    if (firstname === "" || lastname === "" || email === "" || password === "") {
       return res.status(400).json({ message: "Invalid data: Empty fields" });
     }
     if (!email.includes("@") || !email.includes(".")) {
@@ -28,17 +28,20 @@ export const register = async (req: Request, res: Response) => {
     }
 
     const newUser = await createUser({
+      firstname,
+      lastname,
       email,
       password,
-      username,
     });
     if (newUser) {
       generateToken(res, newUser._id.toString());
 
       res.status(201).json({
         _id: newUser._id,
-        name: newUser.username,
+        firstname: newUser.firstname,
+        lastname: newUser.lastname,
         email: newUser.email,
+        isEmailVerified: newUser.isEmailVerified,
       });
     } else {
       res.status(400).json({ message: "User not created, Invalid data" });
@@ -63,8 +66,10 @@ export const login = async (req: Request, res: Response) => {
         .status(200)
         .json({
           _id: user._id,
-          name: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname,
           email: user.email,
+          isEmailVerified: user.isEmailVerified,
         })
         .end();
     } else {

@@ -2,7 +2,8 @@ import mongoose, { Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
 interface UserDocument extends Document {
-  username: string;
+  firstname: string;
+  lastname: string;
   email: string;
   password: string;
   isEmailVerified: boolean;
@@ -11,8 +12,9 @@ interface UserDocument extends Document {
 
 const UserSchema = new mongoose.Schema(
   {
-    username: { type: String, required: true },
-    email: { type: String, required: true, unique: true},
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false },
     isEmailVerified: { type: Boolean, default: false },
   },
@@ -21,8 +23,8 @@ const UserSchema = new mongoose.Schema(
   }
 );
 
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     next();
   }
 
@@ -33,7 +35,6 @@ UserSchema.pre('save', async function (next) {
 UserSchema.methods.matchPassword = async function (enteredPassword: string) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
-
 
 export const UserModel = mongoose.model<UserDocument>("User", UserSchema);
 

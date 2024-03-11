@@ -1,10 +1,13 @@
-import { useDispatch } from "react-redux";
-import { setIsAuthenticated } from "../../redux/slices/app";
-import { Link } from "react-router-dom";
-import { set, z } from "zod";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsAuthenticated, setUserInfo } from "../../redux/slices/app";
+import { Link, useNavigate } from "react-router-dom";
+import {  z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useLoginMutation } from "../../redux/api/usersApiSlice";
+import { RootState } from "../../redux/store";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 type FormData = {
   email: string;
@@ -12,7 +15,16 @@ type FormData = {
 };
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {userInfo} = useSelector((state: RootState) => state.app);
+  const [login, {isSuccess, isLoading, isError}] = useLoginMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(setIsAuthenticated(true));
+    }
+  }, [userInfo]);
 
   const schema = z.object({
     email: z.string().email({ message: "Invalid email" }),
@@ -27,12 +39,28 @@ const Login = () => {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  const handleSave = async (data: FormData) => {
-    console.log(data);
-    dispatch(setIsAuthenticated(true));
+  const handleLogin = async (data: FormData) => {
+    try {
+     const res =  await login(data).unwrap();
+     console.log(res)
+     dispatch(setIsAuthenticated(true));
+     dispatch(setUserInfo(res));
+      navigate("/");
+    } catch (error) {
+      if ((error as any)?.status === 401) {
+        toast.error((error as any)?.data.message),{
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        
+        }
+      }
+      console.log(error);
+    }
   };
-
-  const dispatch = useDispatch();
   return (
     <div>
       <h1>Impact.Chain </h1>
@@ -40,7 +68,7 @@ const Login = () => {
         <h3>Login</h3>
         <span>Sign in to continue</span>
       </div>
-      <form className="" onSubmit={handleSubmit(handleSave)}>
+      <form className="" onSubmit={handleSubmit(handleLogin)}>
         <input
           type="email"
           placeholder="Email"

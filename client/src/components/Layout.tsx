@@ -7,7 +7,6 @@ import { RootState } from "../redux/store";
 import { useAuth } from "../hooks/AppContext";
 import { useEffect, useState } from "react";
 import { UserRecord } from "../hooks/declarations/impact_chain_data/impact_chain_data.did";
-import { boolean } from "zod";
 
 const Layout = () => {
   // TODO: Document this component

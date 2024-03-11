@@ -89,15 +89,13 @@ export const verifyUser = async (req: Request, res: Response, next: NextFunction
     if (!email) {
       return res.status(400).json({ message: "Email is required" });
     };
-
     const user = await UserModel.findOne({ email })
 
     if (!user) {
-      return res.status(400).json({ message: "User does not exist" });
+      return res.status(404).json({ message: "User does not exist" });
     }
     return next();
   } catch (error) {
-    console.log("error in verifyUser middleware: ", error);
     return res.sendStatus(400);
   }
 }

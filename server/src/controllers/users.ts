@@ -43,14 +43,16 @@ export const updateUser = expressAsyncHandler(async (req, res) => {
     }
   }
 
-  user.username = req.body.username || user.username;
+  user.firstname = req.body.firstname || user.firstname;
+  user.lastname = req.body.lastname || user.lastname;
   user.email = req.body.email || user.email;
 
   const updatedUser = await user.save();
 
   res.json({
     _id: updatedUser._id,
-    username: updatedUser.username,
+    firstname: updatedUser.firstname,
+    lastname: updatedUser.lastname,
     email: updatedUser.email,
   });
 });

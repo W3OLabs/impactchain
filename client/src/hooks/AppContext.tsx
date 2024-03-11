@@ -7,8 +7,9 @@ import React, {
 } from "react";
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 
-import { canisterId, idlFactory } from "./declarations/impact_chain_data";
 import { _SERVICE } from "./declarations/impact_chain_data/impact_chain_data.did";
+import { dataCanisterId, dataIDL } from "./declarations/exporter";
+import { getUser } from "../helpers/helpers";
 
 const network = import.meta.env.DFX_NETWORK || "local";
 const localhost = "http://localhost:4943";
@@ -22,7 +23,6 @@ const initialContext: AuthContextType = {
   dataActor: null,
 };
 
-
 const AuthContext = createContext<AuthContextType>(initialContext);
 
 export const useAuthClient = () => {
@@ -32,7 +32,13 @@ export const useAuthClient = () => {
 
   useEffect(() => {
     updateClient();
+    getUserProfile()
   }, []);
+
+  async function getUserProfile() {
+    const data = await getUser();
+    console.log("data: ", data);
+  }
 
   async function updateClient() {
     let agent = new HttpAgent({
@@ -43,13 +49,10 @@ export const useAuthClient = () => {
       agent.fetchRootKey();
     }
 
-    const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(
-      idlFactory,
-      {
-        agent,
-        canisterId: canisterId,
-      }
-    );
+    const _backendActor: ActorSubclass<_SERVICE> = Actor.createActor(dataIDL, {
+      agent,
+      canisterId: dataCanisterId,
+    });
     setBackendActor(_backendActor);
   }
 

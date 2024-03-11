@@ -1,8 +1,11 @@
 import axios from "axios";
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL as string;
+
 export const authenticate = async (email: string) => {
   try {
-    return await axios.post("/auth/authenticate", { email });
+    let {status} = await axios.post("/auth/authenticate", { email });
+    return status;
   } catch (error) {
     return { error: "Error authenticating user. User not found." };
   }
@@ -23,14 +26,15 @@ export const registerUser = async (credentials: any) => {
       ...credentials,
     });
 
-    const { username, email } = data;
+    console.log("Signup successfull, sending mail", data, status)
+    const { fistname, email } = data;
 
     let text =
       "Welcome to Impact Chain! We are very excited to have you on board.";
 
     if (status === 201) {
       await axios.post("/auth/register-mail", {
-        username,
+        username: fistname,
         userEmail: email,
         text,
       });
@@ -41,6 +45,15 @@ export const registerUser = async (credentials: any) => {
     return { error: "Error registering user. User already exists." };
   }
 };
+
+export const login = async (email: string, password: string) => {
+  try {
+    const { data } = await axios.post("/auth/login", { email, password });
+    return Promise.resolve(data);
+  } catch (error) {
+   return Promise.reject({error})
+  }
+}
 
 export const verifyPassword = async (email: string, password: string) => {
   try {
@@ -83,5 +96,29 @@ export const generateOTP = async (email: string) => {
     return Promise.resolve(code);
   } catch (error) {
     return Promise.reject({ error: "Couldn't generate OTP" });
+  }
+};
+
+export const verifyOPT = async (email: string, code: string) => {
+  try {
+    const { data, status } = await axios.post("/auth/verify-otp", {
+      email,
+      code,
+    });
+    return Promise.resolve({ data, status });
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export const resetPassword = async (email: string, password: string) => {
+  try {
+    const { data, status } = await axios.put("/auth/reset-password", {
+      email,
+      password,
+    });
+    return Promise.resolve({ data, status });
+  } catch (error) {
+    return Promise.reject(error);
   }
 };

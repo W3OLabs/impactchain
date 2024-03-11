@@ -1,10 +1,13 @@
-import { useDispatch } from "react-redux";
-import { setIsAuthenticated } from "../../redux/slices/app";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsAuthenticated, setUserInfo } from "../../redux/slices/app";
 import { Link } from "react-router-dom";
-import { set, z } from "zod";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { registerUser } from "../../helpers/helpers";
+import { RootState } from "../../redux/store";
+import { useSignupMutation } from "../../redux/api/usersApiSlice";
 
 type FormData = {
   firstname: string;
@@ -16,6 +19,7 @@ type FormData = {
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
+const [signup, {isLoading, isSuccess}] = useSignupMutation();
 
   const schema = z.object({
     firstname: z.string().min(2, { message: "First Name must be at least 2 characters long" })
@@ -35,8 +39,20 @@ const Register = () => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const handleSave = async (data: FormData) => {
-    console.log(data);
+   try {
+    const body = {
+      firstname: data.firstname,
+      lastname: data.lastname,
+      email: data.email,
+      password: data.password,
+    };
+    const res = await signup(body).unwrap();
+    console.log("Finished")
     dispatch(setIsAuthenticated(true));
+    dispatch(setUserInfo(res));
+   } catch (error) {
+    console.log(error)
+   }
   };
 
   const dispatch = useDispatch();
@@ -56,6 +72,11 @@ const Register = () => {
           placeholder="First Name"
           {...register("firstname", { required: "First Name is required" })} />
         <p>{errors.firstname?.message}</p>
+
+        <input type="text"
+          placeholder="Last Name"
+          {...register("lastname", { required: "Last Name is required" })} />
+        <p>{errors.lastname?.message}</p>
          
         <input
           type="email"
@@ -76,10 +97,6 @@ const Register = () => {
         />
         <button type="submit">Sign Up</button>
       </form>
-      <div className="flex flex-col">
-        <Link to="/forgot-password">Forgot password?</Link>
-        <Link to="/signup">Create an account</Link>
-      </div>
     </div>
   );
 };
