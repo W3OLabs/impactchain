@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom";
+import React from "react";
+import '../../index.css';
 
 const LandingPage = () => {
   return (
-    <div>
-      <h1>Landing page</h1>
-      <Link to="login">Login</Link>
+    <div className="landing-page">
+      <div className="img"/>
+      <div className="group">
+        <span className="text">Welcome to </span>
+        <span className="text-2">impact.</span>
+        <span className="text-3">chain</span>
+      </div>
+      <div className="button-box">
+        <Link to="login">
+          <span className="text-4">
+            Login
+          </span>
+        </Link>
+      </div>
+      
     </div>
   );
 };
