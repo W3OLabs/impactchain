@@ -9,8 +9,6 @@ import { TiThMenu } from "react-icons/ti";
 import { AiOutlineClose } from "react-icons/ai";
 import NotificationDropdown from "./NotificationDropdown";
 
-
-
 const Sidebar = () => {
   const [tab, setTab] = useState<string>("");
   const [collapseShow, setCollapseShow] = useState("hidden");
@@ -19,11 +17,10 @@ const Sidebar = () => {
 
   return (
     <>
-      <nav className="md:left-0 md:block bg-gradient-to-t from-blue-500 to-blue-400  text-white md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 md:block bg-black text-white md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-     
           <button
-            className="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded  border-transparent"
+            className="cursor-pointer opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded  border-transparent"
             type="button"
             onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
@@ -31,12 +28,14 @@ const Sidebar = () => {
           </button>
           <div className="flex justify-between items-center w-full md:flex-none">
             <Link
-              className="md:block text-4xl md:pb-2 text-white mr-0  font-bold p-4 px-0"
+              className="md:block text-xl md:pb-2 text-white mr-0  font-bold p-4 px-0"
               to="/home"
             >
-              <div className="flex justify-center gap-2">
-                {/* <img src={Logo} alt="logo" className="w-10 h-10" /> */}
-                <h3 className="font-graphikSemiBold">Impact Chain</h3>
+              <div className="flex items-center justify-center gap-2">
+                <img src="/green-icon.svg" alt="logo" className="w-10 h-10" />
+                <h4 className=" ">
+                  <span className="text-custom-green">impact.</span>chain
+                </h4>
               </div>
             </Link>
             <button
@@ -102,7 +101,6 @@ const Sidebar = () => {
                         Ask AI
                       </button>
                     </li>
-                    
                   </ul>
                 </div>
               </div>
@@ -154,20 +152,17 @@ const Sidebar = () => {
               </div>
             </form>
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-
             <ul className="md:flex-col md:min-w-full flex gap-[20px] flex-col list-none">
               <li className="items-center">
                 <Link
                   to="/home"
                   onClick={() => setTab("home")}
                   className={`
-                    text-xs uppercase py-3 font-bold  flex items-center gap-2 px-3  ${
-                      tab === "home"
-                        ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
-                        : "text-blueGray-700 hover:text-blueGray-500"
-                    }
+                     py-3   flex items-center gap-2 px-3  ${
+                       tab === "home"
+                         ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                         : "text-blueGray-700 hover:text-blueGray-500"
+                     }
                  
                   `}
                 >
@@ -187,11 +182,11 @@ const Sidebar = () => {
                   to="/dashboard"
                   onClick={() => setTab("dashboard")}
                   className={`
-                    text-xs uppercase py-3 font-bold  flex items-center gap-2 px-3  ${
-                      tab === "dashboard"
-                        ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
-                        : "text-blueGray-700 hover:text-blueGray-500"
-                    }
+                     py-3   flex items-center gap-2 px-3  ${
+                       tab === "dashboard"
+                         ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                         : "text-blueGray-700 hover:text-blueGray-500"
+                     }
                  
                   `}
                 >
@@ -199,9 +194,7 @@ const Sidebar = () => {
                     size={20}
                     className={`
                       fas fa-tv mr-2 text-sm ${
-                        tab === "dashboard"
-                          ? "opacity-75"
-                          : "text-blueGray-300"
+                        tab === "dashboard" ? "opacity-75" : "text-blueGray-300"
                       }
                     `}
                   />
@@ -213,11 +206,11 @@ const Sidebar = () => {
                   to="/analytics"
                   onClick={() => setTab("analytics")}
                   className={`
-                  text-xs uppercase py-3 font-bold  w-full flex items-center gap-2 px-3  ${
-                    tab === "analytics"
-                      ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500"
-                  }
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "analytics"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
         
                   `}
                 >
@@ -236,11 +229,11 @@ const Sidebar = () => {
                   to="/askai"
                   onClick={() => setTab("askai")}
                   className={`
-                  text-xs uppercase py-3 font-bold  w-full flex items-center gap-2 px-3  ${
-                    tab === "askai"
-                      ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500"
-                  }
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "askai"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
         
                   `}
                 >
@@ -259,18 +252,20 @@ const Sidebar = () => {
                   to="/carbon-credits"
                   onClick={() => setTab("carbon-credits")}
                   className={`
-                  text-xs uppercase py-3 font-bold  w-full flex items-center gap-2 px-3  ${
-                    tab === "carbon-credits"
-                      ? "text-cyan-500 rounded-xl bg-white hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500"
-                  }
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "carbon-credits"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
         
                   `}
                 >
                   <CiSettings
                     size={20}
                     className={`${
-                      tab === "carbon-credits" ? "opacity-75" : "text-blueGray-300"
+                      tab === "carbon-credits"
+                        ? "opacity-75"
+                        : "text-blueGray-300"
                     }
                     `}
                   />
@@ -278,7 +273,87 @@ const Sidebar = () => {
                 </Link>
               </li>
             </ul>
-          
+
+            {/* Divider */}
+            <hr className="mt-28 bg-custom-green md:min-w-full" />
+
+            <ul className="md:flex-col mt-5 md:min-w-full flex gap-[20px] flex-col list-none">
+              <li className="items-center">
+                <Link
+                  to="/carbon-credits"
+                  onClick={() => setTab("carbon-credits")}
+                  className={`
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "carbon-credits"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
+        
+                  `}
+                >
+                  <CiSettings
+                    size={20}
+                    className={`${
+                      tab === "carbon-credits"
+                        ? "opacity-75"
+                        : "text-blueGray-300"
+                    }
+                    `}
+                  />
+                  <span>Carbon Credits</span>
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  to="/carbon-credits"
+                  onClick={() => setTab("carbon-credits")}
+                  className={`
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "carbon-credits"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
+        
+                  `}
+                >
+                  <CiSettings
+                    size={20}
+                    className={`${
+                      tab === "carbon-credits"
+                        ? "opacity-75"
+                        : "text-blueGray-300"
+                    }
+                    `}
+                  />
+                  <span>Carbon Credits</span>
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  to="/carbon-credits"
+                  onClick={() => setTab("carbon-credits")}
+                  className={`
+                   py-3   w-full flex items-center gap-2 px-3  ${
+                     tab === "carbon-credits"
+                       ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
+                       : "text-blueGray-700 hover:text-blueGray-500"
+                   }
+        
+                  `}
+                >
+                  <CiSettings
+                    size={20}
+                    className={`${
+                      tab === "carbon-credits"
+                        ? "opacity-75"
+                        : "text-blueGray-300"
+                    }
+                    `}
+                  />
+                  <span>Carbon Credits</span>
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
