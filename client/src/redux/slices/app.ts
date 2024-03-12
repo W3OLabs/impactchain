@@ -20,10 +20,15 @@ export const appSlice = createSlice({
     setUserInfo : (state: GlobalState, action: PayloadAction<any>) => {
       state.userInfo = action.payload;
       localStorage.setItem('userInfo', JSON.stringify(action.payload));
+    },
+    logout : (state: GlobalState) => {
+      state.isAuthenticated = false;
+      state.userInfo = null;
+      localStorage.removeItem('userInfo');
     }
   },
 });
 
-export const { setIsAuthenticated, setUserInfo} = appSlice.actions;
+export const { setIsAuthenticated, setUserInfo, logout} = appSlice.actions;
 
 export default appSlice.reducer;

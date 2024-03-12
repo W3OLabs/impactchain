@@ -9,7 +9,7 @@ import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 
 import { _SERVICE } from "./declarations/impact_chain_data/impact_chain_data.did";
 import { dataCanisterId, dataIDL } from "./declarations/exporter";
-import { getUser } from "../helpers/helpers";
+import { useGetUserQuery } from "../redux/api/usersApiSlice";
 
 const network = import.meta.env.DFX_NETWORK || "local";
 const localhost = "http://localhost:4943";
@@ -29,6 +29,8 @@ export const useAuthClient = () => {
   const [dataActor, setBackendActor] = useState<ActorSubclass<_SERVICE> | null>(
     null
   );
+
+  const {data} = useGetUserQuery({})
 
   useEffect(() => {
     updateClient();

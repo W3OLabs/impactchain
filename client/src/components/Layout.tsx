@@ -34,7 +34,7 @@ const Layout = () => {
   }
 
   return (
-    <div className="font-Poppins ">
+    <div className="font-Poppins bg-black text-white ">
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100 min-h-screen">
         <Navbar />

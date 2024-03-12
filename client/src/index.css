@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "NeueMachina-light";
+  src: url("./assets/fonts/NeueMachina-Light.otf") format("truetype");
+  font-weight: light;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NeueMachina-regular";
+  src: url("./assets/fonts/NeueMachina-Regular.otf") format("truetype");
+  font-weight: regular;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "NeueMachina-ultra-bold";
+  src: url("./assets/fonts/NeueMachina-Ultrabold.otf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Poppins-regular";
+  src: url("./assets/fonts/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}

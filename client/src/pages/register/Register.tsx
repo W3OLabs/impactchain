@@ -7,7 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { registerUser } from "../../helpers/helpers";
 import { RootState } from "../../redux/store";
-import { useSignupMutation } from "../../redux/api/usersApiSlice";
+import { useLazyAuthenticateQuery, useSignupMutation } from "../../redux/api/usersApiSlice";
+import { toast } from "react-toastify";
 
 type FormData = {
   firstname: string;
@@ -19,18 +20,25 @@ type FormData = {
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
-const [signup, {isLoading, isSuccess}] = useSignupMutation();
+  const [signup, { isLoading, isSuccess }] = useSignupMutation();
+  const [check, data] = useLazyAuthenticateQuery();
 
   const schema = z.object({
-    firstname: z.string().min(2, { message: "First Name must be at least 2 characters long" })
-    .max(50, { message: "First Name must be at most 50 characters long" }),
-    lastname: z.string().min(2, { message: "Last Name must be at least 2 characters long" })
-    .max(50, { message: "Last Name must be at most 50 characters long" }),
+    firstname: z
+      .string()
+      .min(2, { message: "First Name must be at least 2 characters long" })
+      .max(50, { message: "First Name must be at most 50 characters long" }),
+    lastname: z
+      .string()
+      .min(2, { message: "Last Name must be at least 2 characters long" })
+      .max(50, { message: "Last Name must be at most 50 characters long" }),
     email: z.string().email({ message: "Invalid email" }),
     password: z
       .string()
       .min(6, { message: "Password must be at least 6 characters long" }),
-    confirmPassword: z.string().min(6, { message: "Password must be at least 6 characters long" }),
+    confirmPassword: z
+      .string()
+      .min(6, { message: "Password must be at least 6 characters long" }),
   });
   const {
     register,
@@ -39,50 +47,62 @@ const [signup, {isLoading, isSuccess}] = useSignupMutation();
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const handleSave = async (data: FormData) => {
-   try {
-    const body = {
-      firstname: data.firstname,
-      lastname: data.lastname,
-      email: data.email,
-      password: data.password,
-    };
-    const res = await signup(body).unwrap();
-    console.log("Finished")
-    dispatch(setIsAuthenticated(true));
-    dispatch(setUserInfo(res));
-   } catch (error) {
-    console.log(error)
-   }
+    try {
+      let ress = await check({}).unwrap();
+      console.log("Check response", ress);
+
+      const body = {
+        firstname: data.firstname,
+        lastname: data.lastname,
+        email: data.email,
+        password: data.password,
+      };
+      const res = await signup(body).unwrap();
+      console.log("Finished");
+      dispatch(setIsAuthenticated(true));
+      dispatch(setUserInfo(res));
+    } catch (error) {
+      if ((error as any)?.status === 400) {
+        toast.error("Something went wrong"),
+          {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          };
+      }
+      console.log(error);
+    }
   };
 
   const dispatch = useDispatch();
   return (
-    <div>
+    <div className="bg-black text-white min-h-screen">
       <h1>Impact.Chain </h1>
       <div className="">
-        <h3>
-          Create new account
-        </h3>
-       <span> 
-        Already have an account? <Link to="/login">Login</Link>
-       </span>
+        <h3>Create new account</h3>
+        <span>
+          Already have an account? <Link to="/login">Login</Link>
+        </span>
       </div>
       <form className="" onSubmit={handleSubmit(handleSave)}>
-        <input type="text"
+        <input
+          type="text"
           placeholder="First Name"
-          {...register("firstname", { required: "First Name is required" })} />
+          {...register("firstname", { required: "First Name is required" })}
+        />
         <p>{errors.firstname?.message}</p>
 
-        <input type="text"
-          placeholder="Last Name"
-          {...register("lastname", { required: "Last Name is required" })} />
-        <p>{errors.lastname?.message}</p>
-         
         <input
-          type="email"
-          placeholder="Email"
-          {...register("email")}
+          type="text"
+          placeholder="Last Name"
+          {...register("lastname", { required: "Last Name is required" })}
         />
+        <p>{errors.lastname?.message}</p>
+
+        <input type="email" placeholder="Email" {...register("email")} />
         <p>{errors.email?.message}</p>
         <input
           type="password"
@@ -95,7 +115,7 @@ const [signup, {isLoading, isSuccess}] = useSignupMutation();
           placeholder="Confirm Password"
           {...register("confirmPassword", { required: "Password is required" })}
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
       </form>
     </div>
   );
