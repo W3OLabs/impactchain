@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 
 import Sidebar from "./SideBar";
-import Navbar from "./Navbar";
+import Navbar from "./Header";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useAuth } from "../hooks/AppContext";

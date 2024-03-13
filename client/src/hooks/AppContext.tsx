@@ -34,13 +34,7 @@ export const useAuthClient = () => {
 
   useEffect(() => {
     updateClient();
-    getUserProfile()
   }, []);
-
-  async function getUserProfile() {
-    const data = await getUser();
-    console.log("data: ", data);
-  }
 
   async function updateClient() {
     let agent = new HttpAgent({

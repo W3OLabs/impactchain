@@ -14,12 +14,14 @@ const Register = lazy(() => import("./pages/register/Register"));
 const Dashboard = lazy(() => import("./pages/dashboard/Dashboard"));
 const Analytics = lazy(() => import("./pages/analytics/Analytics"));
 const AskAI = lazy(() => import("./pages/askai/AskAI"));
+const Settings = lazy(() => import("./pages/settings/Settings"));
 const CarbonCredits = lazy(
   () => import("./pages/carbon-credits/CarbonCredits")
 );
 const LandingPage = lazy(() => import("./pages/landing/Landing"));
 const Notfound = lazy(() => import("./components/Notfound"));
 const ResetPassword = lazy(() => import("./pages/reset/ResetPassword"));
+const Help = lazy(() => import("./pages/help/Help"));
 
 const App = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.app);
@@ -54,6 +56,8 @@ const App = () => {
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/askai" element={<AskAI />} />
               <Route path="/carbon-credits" element={<CarbonCredits />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="/help" element={<Help />} />
             </Route>
           </Route>
           <Route

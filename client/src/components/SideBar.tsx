@@ -8,16 +8,33 @@ import { CiHome } from "react-icons/ci";
 import { TiThMenu } from "react-icons/ti";
 import { AiOutlineClose } from "react-icons/ai";
 import NotificationDropdown from "./NotificationDropdown";
+import { useLogoutMutation } from "../redux/api/usersApiSlice";
+import { logout } from "../redux/slices/app";
+import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
   const [tab, setTab] = useState<string>("");
   const [collapseShow, setCollapseShow] = useState("hidden");
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [logoutCall, { isSuccess }] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logoutCall({}).unwrap();
+      dispatch(logout());
+
+      navigate("/");
+    } catch (error) {
+      console.log("Error logging out", error);
+    }
+  };
 
   return (
     <>
-      <nav className="md:left-0 md:block bg-black text-white md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
+      <nav className="md:left-0 md:block bg-custom-gray rounded-r-xl border-r border-r-green-600 border-r-0.5 text-white md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           <button
             className="cursor-pointer opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded  border-transparent"
@@ -33,7 +50,7 @@ const Sidebar = () => {
             >
               <div className="flex items-center justify-center gap-2">
                 <img src="/green-icon.svg" alt="logo" className="w-10 h-10" />
-                <h4 className=" ">
+                <h4 className="text-2xl">
                   <span className="text-custom-green">impact.</span>chain
                 </h4>
               </div>
@@ -166,15 +183,12 @@ const Sidebar = () => {
                  
                   `}
                 >
-                  <CiHome
-                    size={20}
-                    className={`
-                      fas fa-tv mr-2 text-sm ${
-                        tab === "home" ? "opacity-75" : "text-blueGray-300"
-                      }
-                    `}
+                  <img
+                    src="/user_icon.svg"
+                    alt="user-icon"
+                    className="w-7 h-7"
                   />
-                  <span>Home</span>
+                  <span>User</span>
                 </Link>
               </li>
               <li className="items-center">
@@ -190,13 +204,10 @@ const Sidebar = () => {
                  
                   `}
                 >
-                  <IoCardOutline
-                    size={20}
-                    className={`
-                      fas fa-tv mr-2 text-sm ${
-                        tab === "dashboard" ? "opacity-75" : "text-blueGray-300"
-                      }
-                    `}
+                  <img
+                    src="/dash-icon.svg"
+                    alt="dashboard-icon"
+                    className="w-7 h-7"
                   />
                   <span>Dashboard</span>
                 </Link>
@@ -206,7 +217,7 @@ const Sidebar = () => {
                   to="/analytics"
                   onClick={() => setTab("analytics")}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
+                   py-2 w-full flex items-center gap-2 px-3  ${
                      tab === "analytics"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
@@ -214,13 +225,12 @@ const Sidebar = () => {
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "analytics" ? "opacity-75" : "text-blueGray-300"
-                    }
-                    `}
+                  <img
+                    src="/bar-chart.svg"
+                    alt="analytics-icon"
+                    className="w-7 h-7"
                   />
+
                   <span>Analytics</span>
                 </Link>
               </li>
@@ -229,7 +239,7 @@ const Sidebar = () => {
                   to="/askai"
                   onClick={() => setTab("askai")}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
+                   py-2 w-full flex items-center gap-2 px-3  ${
                      tab === "askai"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
@@ -237,12 +247,10 @@ const Sidebar = () => {
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "askai" ? "opacity-75" : "text-blueGray-300"
-                    }
-                    `}
+                  <img
+                    src="/smiley.svg"
+                    alt="askai-icon"
+                    className="w-7 h-17"
                   />
                   <span>Ask AI</span>
                 </Link>
@@ -252,7 +260,7 @@ const Sidebar = () => {
                   to="/carbon-credits"
                   onClick={() => setTab("carbon-credits")}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
+                   py-2 w-full flex items-center gap-2 px-3  ${
                      tab === "carbon-credits"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
@@ -260,14 +268,10 @@ const Sidebar = () => {
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "carbon-credits"
-                        ? "opacity-75"
-                        : "text-blueGray-300"
-                    }
-                    `}
+                  <img
+                    src="/seedling.svg"
+                    alt="carbon-credits-icon"
+                    className="w-7 h-7"
                   />
                   <span>Carbon Credits</span>
                 </Link>
@@ -275,83 +279,69 @@ const Sidebar = () => {
             </ul>
 
             {/* Divider */}
-            <hr className="mt-28 bg-custom-green md:min-w-full" />
+            <hr className="mt-28 border-custom-green md:min-w-full" />
 
             <ul className="md:flex-col mt-5 md:min-w-full flex gap-[20px] flex-col list-none">
               <li className="items-center">
                 <Link
-                  to="/carbon-credits"
-                  onClick={() => setTab("carbon-credits")}
+                  to="/settings"
+                  onClick={() => setTab("settings")}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
-                     tab === "carbon-credits"
+                   py-2 w-full flex items-center gap-2 px-3  ${
+                     tab === "settings"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
                    }
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "carbon-credits"
-                        ? "opacity-75"
-                        : "text-blueGray-300"
-                    }
-                    `}
+                  <img
+                    src="/Gear.svg"
+                    alt="settings-icon"
+                    className="w-7 h-7"
                   />
-                  <span>Carbon Credits</span>
+                  <span>Settings</span>
                 </Link>
               </li>
               <li className="items-center">
                 <Link
-                  to="/carbon-credits"
-                  onClick={() => setTab("carbon-credits")}
+                  to="/help"
+                  onClick={() => setTab("help")}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
-                     tab === "carbon-credits"
+                   py-2 w-full flex items-center gap-2 px-3  ${
+                     tab === "help"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
                    }
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "carbon-credits"
-                        ? "opacity-75"
-                        : "text-blueGray-300"
-                    }
-                    `}
-                  />
-                  <span>Carbon Credits</span>
+                  <img src="/help.svg" alt="help-icon" className="w-7 h-7" />
+                  <span>Help</span>
                 </Link>
               </li>
               <li className="items-center">
-                <Link
-                  to="/carbon-credits"
-                  onClick={() => setTab("carbon-credits")}
+                <button
+                  onClick={() => {
+                    setTab("logout");
+                    handleLogout();
+                  }}
                   className={`
-                   py-3   w-full flex items-center gap-2 px-3  ${
-                     tab === "carbon-credits"
+                   py-2 w-full flex items-center gap-2 px-3  ${
+                     tab === "logout"
                        ? "text-black rounded-xl bg-custom-green hover:text-lightBlue-600"
                        : "text-blueGray-700 hover:text-blueGray-500"
                    }
         
                   `}
                 >
-                  <CiSettings
-                    size={20}
-                    className={`${
-                      tab === "carbon-credits"
-                        ? "opacity-75"
-                        : "text-blueGray-300"
-                    }
-                    `}
+                  <img
+                    src="/Unlocked.svg"
+                    alt="logout-icon"
+                    className="w-7 h-7"
                   />
-                  <span>Carbon Credits</span>
-                </Link>
+                  <span>Logout</span>
+                </button>
               </li>
             </ul>
           </div>

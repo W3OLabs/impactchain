@@ -106,7 +106,7 @@ const Login = () => {
                   className="bg-green-500 rounded-3xl px-20 py-1.5 text-black font-semibold  hover:bg-green-600font-bold focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Login
+                  {isLoading ? "Loading" : "Login"}
                 </button>
               </div>
             </form>

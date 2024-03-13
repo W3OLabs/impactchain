@@ -2,7 +2,8 @@ import React from 'react'
 
 const LoadingScreen = () => {
   return (
-    <div>LoadingScreen</div>
+    <div className="bg-black min-h-screen text-white">
+      LoadingScreen</div>
   )
 }
 
