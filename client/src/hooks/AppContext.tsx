@@ -8,10 +8,9 @@ import React, {
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 
 import { _SERVICE } from "./declarations/impact_chain_data/impact_chain_data.did";
-import { dataCanisterId, dataIDL } from "./declarations/exporter";
+import { dataCanisterId, dataIDL, network } from "./declarations/exporter";
 import { useGetUserQuery } from "../redux/api/usersApiSlice";
 
-const network = import.meta.env.DFX_NETWORK || "local";
 const localhost = "http://localhost:4943";
 const host = "https://icp0.io";
 
@@ -25,23 +24,21 @@ const initialContext: AuthContextType = {
 
 const AuthContext = createContext<AuthContextType>(initialContext);
 
-export const useAuthClient = () => {
+const useAuthClient = () => {
   const [dataActor, setBackendActor] = useState<ActorSubclass<_SERVICE> | null>(
     null
   );
-
-  const {data} = useGetUserQuery({})
 
   useEffect(() => {
     updateClient();
   }, []);
 
   async function updateClient() {
-    let agent = new HttpAgent({
-      host: network === "local" ? localhost : host,
+    const agent = new HttpAgent({
+      host: network === "ic" ? host : localhost,
     });
 
-    if (network === "local") {
+    if (network !== "ic") {
       agent.fetchRootKey();
     }
 

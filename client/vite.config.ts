@@ -1,11 +1,22 @@
+import { fileURLToPath, URL } from 'url';
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import environment from 'vite-plugin-environment';
+import dotenv from 'dotenv';
 
+dotenv.config({ path: '../../.env' });
 
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
-// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  build: {
+    emptyOutDir: true,
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+    },
+  },
   server: {
     port: 3000,
     proxy: {
@@ -18,9 +29,19 @@ export default defineConfig({
       usePolling: true
     }
   },
-  define: {
-    // By default, Vite doesn't include shims for NodeJS/
-    // necessary for segment analytics lib to work
-    global: {},
+  plugins: [
+    react(),
+    environment("all", { prefix: "CANISTER_" }),
+    environment("all", { prefix: "DFX_" }),
+  ],
+  resolve: {
+    alias: [
+      {
+        find: "declarations",
+        replacement: fileURLToPath(
+          new URL("../declarations", import.meta.url)
+        ),
+      },
+    ],
   },
-})
+});
