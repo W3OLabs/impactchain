@@ -54,16 +54,14 @@ button {
 }
 
 .main-container {
-  position: relative;
-  width: 1440px; /* 1440px */
-  height: 1024px;
+
   margin: 0 auto;
   background: #000000;
   overflow: hidden;
 }
 
 .landing-page {
-  position: relative;
+  
   margin: 0 auto;
   min-height: 100vh;
   background: linear-gradient(0.24deg, #000000, #4fef64);
@@ -73,16 +71,13 @@ button {
   position: relative;
   width: 330px;
   height: 330px;
-  margin: 95px 0 0 555px;
+ 
   background: url(../public/green-icon.svg) no-repeat center;
   background-size: cover;
   z-index: 5;
 }
 .group {
   position: relative;
-  width: 793px;
-  height: 176px;
-  margin: -1px 0 0 323px;
   font-family: Neue Machina, var(--default-font-family);
   font-size: 91px;
   font-weight: 800;
@@ -90,10 +85,8 @@ button {
   text-align: center;
 }
 .group-login {
-  position: relative;
-  width: 1916.523px;
-  height: 35px;
-  margin: 200px 0 0 363px;
+  
+ 
   font-family: Neue Machina, var(--default-font-family);
   font-size: 96px;
   font-weight: 800;
@@ -108,7 +101,6 @@ button {
   position: relative;
   width: 434px;
   height: 40px;
-  margin: 46px 0 0 520px;
   background: #000000;
   border: 2px solid #4fef64;
   z-index: 13;
@@ -147,7 +139,6 @@ button {
   position: relative;
   width: 240px;
   height: 40px;
-  margin: 150px 0 100px 600px;
   background: #4fef64;
   z-index: 3;
   border-radius: 20px;
@@ -204,7 +195,6 @@ button {
   display: block;
   position: relative;
   height: 50px;
-  margin: 57px 0 0 647px;
   color: #4fef64;
   font-family: Neue Machina, var(--default-font-family);
   font-size: 50px;
@@ -218,7 +208,6 @@ button {
   display: block;
   position: relative;
   height: 27px;
-  margin: 32px 0 0 610px;
   color: #4fef64;
   font-family: PP Telegraf, var(--default-font-family);
   font-size: 25px;
@@ -232,7 +221,6 @@ button {
   display: block;
   position: relative;
   height: 27px;
-  margin: 10px 0 0 610px;
   color: #4fef64;
   font-family: PP Telegraf, var(--default-font-family);
   font-size: 25px;
