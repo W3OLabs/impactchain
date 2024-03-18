@@ -42,7 +42,6 @@ const Login = () => {
   const handleLogin = async (data: FormData) => {
     try {
       const res = await login(data).unwrap();
-      console.log(res);
       dispatch(setIsAuthenticated(true));
       dispatch(setUserInfo(res));
       navigate("/");

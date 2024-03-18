@@ -5,7 +5,8 @@ import LoadingScreen from "./components/LoadingScreen";
 import Layout from "./components/Layout";
 import { RootState } from "./redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsAuthenticated, setUserInfo } from "./redux/slices/app";
+import { setIsAuthenticated, setShowDataForm, setUserInfo } from "./redux/slices/app";
+import { useAuth } from "./hooks/AppContext";
 
 // Pages
 const Home = lazy(() => import("./pages/home/Home"));
@@ -24,26 +25,42 @@ const ResetPassword = lazy(() => import("./pages/reset/ResetPassword"));
 const Help = lazy(() => import("./pages/help/Help"));
 
 const App = () => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.app);
+  const {userInfo, isAuthenticated } = useSelector((state: RootState) => state.app);
+  const {dataActor} =  useAuth()
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      console.log("User is authenticated");
-    }
-  }, [isAuthenticated]);
 
   useEffect(() => {
     getUserInfo();
   }, []);
 
   const getUserInfo = () => {
-    let user = localStorage.getItem("userInfo");
+    const user = JSON.parse(localStorage.getItem("userInfo") as string);
     if (user) {
       dispatch(setIsAuthenticated(true));
       dispatch(setUserInfo(user));
     }
   };
+
+  useEffect(() => {
+    if (userInfo && dataActor) {
+      getOnChainData()
+    }
+  }, [dataActor, userInfo])
+
+  const getOnChainData = async () => {
+  try {
+    const res = await dataActor?.getUserRecord(userInfo.email)
+    if (res ) {
+      if ("ok" in res) {
+        console.log("On chain data", res.ok)
+      } else {
+        dispatch(setShowDataForm(true))
+      }
+    }
+  } catch (error) {
+    console.log("Error getting on chain data", error)
+  }
+  }
 
   return (
     <BrowserRouter>

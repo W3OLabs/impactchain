@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../redux/store";
 import { CiSearch } from "react-icons/ci";
+import SubmitData from "./data-submission/SubmitData";
 
 const Header = () => {
-
+const {showDataForm} = useSelector((state: RootState) => state.app);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const loginMenuRef = useRef<HTMLDivElement>(null);
   const [userMenu, setUserMenu] = useState(false);
@@ -34,6 +35,8 @@ const Header = () => {
     };
   }, [userMenuRef, loginMenuRef]);
   return (
+    <>
+   {showDataForm && <SubmitData />}
     <div className="pt-5">
       <div className="h-5 flex items-center justify-end bg-custom-gray mx-10 py-10 rounded-xl border border-green-700">
         <div className="flex items-center justify-between gap-5">
@@ -51,6 +54,7 @@ const Header = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
