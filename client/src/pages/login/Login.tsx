@@ -62,7 +62,7 @@ const Login = () => {
   };
   return (
     <div className="bg-black min-h-screen font-NeueMachinaRegular text-custom-green">
-      <h1 className="font-NeueMachinaUltrabold text-8xl pt-9 text-center">
+      <h1 className="font-NeueMachinaUltrabold text-8xl pt-20 text-center">
         <span className="text-custom-green ">impact.</span>
         <span className="text-white">chain</span>{" "}
       </h1>
@@ -71,7 +71,7 @@ const Login = () => {
           <h3 className=" font-NeueMachinaRegular text-5xl text-custom-green">
             Login
           </h3>
-          <h3 className="text-2xl py-5 font-PoppinsRegular text-center w-full ">
+          <h3 className="text-2xl py-3 font-PoppinsRegular text-center w-full ">
             Sign in to continue
           </h3>
         </div>
@@ -111,7 +111,7 @@ const Login = () => {
             </form>
           </div>
         </div>
-        <div className="flex flex-col gap-5 text-xl">
+        <div className="flex flex-col gap-5 text-xl items-center">
         <Link to="/forgot-password">Forgot password?</Link>
         <Link to="/signup">Create an account</Link>
       </div>
