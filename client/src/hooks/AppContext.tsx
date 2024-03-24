@@ -8,8 +8,7 @@ import React, {
 import { Actor, ActorSubclass, HttpAgent } from "@dfinity/agent";
 
 import { _SERVICE } from "./declarations/impact_chain_data/impact_chain_data.did";
-import { dataCanisterId, dataIDL, network } from "./declarations/exporter";
-import { useGetUserQuery } from "../redux/api/usersApiSlice";
+import { dataCanisterId, dataIDL, network } from "./exporter";
 
 const localhost = "http://localhost:4943";
 const host = "https://icp0.io";

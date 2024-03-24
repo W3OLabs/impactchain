@@ -13,10 +13,17 @@ type WaterDischarge =
  };
 type UserRecord = 
  record {
+   aboutCompany:
+    record {
+      companySize: text;
+      industry: text;
+      logo: opt text;
+      name: text;
+    };
    email: text;
-   impactTarget: vec ImpactTarget;
-   waterDischarge: WaterDischarge;
-   waterEffiency: WaterEffiency;
+   impactTarget: opt vec ImpactTarget;
+   waterDischarge: opt WaterDischarge;
+   waterEffiency: opt WaterEffiency;
  };
 type Result = 
  variant {
@@ -37,8 +44,8 @@ type IOTDevice =
    platform: text;
  };
 service : {
-  addUserRecord: (email, UserRecord) -> ();
+  addUserRecord: (UserRecord) -> ();
   getUserRecord: (email) -> (Result) query;
   removeUserRecord: (email) -> ();
-  updateUserRecord: (email, UserRecord) -> ();
+  updateUserRecord: (UserRecord) -> ();
 }

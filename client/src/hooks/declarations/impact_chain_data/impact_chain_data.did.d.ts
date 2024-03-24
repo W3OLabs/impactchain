@@ -16,10 +16,16 @@ export interface ImpactTarget {
 export type Result = { 'ok' : UserRecord } |
   { 'err' : string };
 export interface UserRecord {
-  'waterEffiency' : WaterEffiency,
-  'waterDischarge' : WaterDischarge,
+  'waterEffiency' : [] | [WaterEffiency],
+  'waterDischarge' : [] | [WaterDischarge],
+  'aboutCompany' : {
+    'logo' : [] | [string],
+    'name' : string,
+    'companySize' : string,
+    'industry' : string,
+  },
   'email' : string,
-  'impactTarget' : Array<ImpactTarget>,
+  'impactTarget' : [] | [Array<ImpactTarget>],
 }
 export interface WaterDischarge {
   'waterDischargeGoal' : [] | [string],
@@ -33,10 +39,10 @@ export interface WaterEffiency {
 }
 export type email = string;
 export interface _SERVICE {
-  'addUserRecord' : ActorMethod<[email, UserRecord], undefined>,
+  'addUserRecord' : ActorMethod<[UserRecord], undefined>,
   'getUserRecord' : ActorMethod<[email], Result>,
   'removeUserRecord' : ActorMethod<[email], undefined>,
-  'updateUserRecord' : ActorMethod<[email, UserRecord], undefined>,
+  'updateUserRecord' : ActorMethod<[UserRecord], undefined>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];

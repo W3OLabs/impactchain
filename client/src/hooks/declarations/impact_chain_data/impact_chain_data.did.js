@@ -1,5 +1,4 @@
 export const idlFactory = ({ IDL }) => {
-  const email = IDL.Text;
   const IOTDevice = IDL.Record({
     'id' : IDL.Text,
     'name' : IDL.Text,
@@ -22,17 +21,24 @@ export const idlFactory = ({ IDL }) => {
     'measurements' : IDL.Vec(IDL.Text),
   });
   const UserRecord = IDL.Record({
-    'waterEffiency' : WaterEffiency,
-    'waterDischarge' : WaterDischarge,
+    'waterEffiency' : IDL.Opt(WaterEffiency),
+    'waterDischarge' : IDL.Opt(WaterDischarge),
+    'aboutCompany' : IDL.Record({
+      'logo' : IDL.Opt(IDL.Text),
+      'name' : IDL.Text,
+      'companySize' : IDL.Text,
+      'industry' : IDL.Text,
+    }),
     'email' : IDL.Text,
-    'impactTarget' : IDL.Vec(ImpactTarget),
+    'impactTarget' : IDL.Opt(IDL.Vec(ImpactTarget)),
   });
+  const email = IDL.Text;
   const Result = IDL.Variant({ 'ok' : UserRecord, 'err' : IDL.Text });
   return IDL.Service({
-    'addUserRecord' : IDL.Func([email, UserRecord], [], []),
+    'addUserRecord' : IDL.Func([UserRecord], [], []),
     'getUserRecord' : IDL.Func([email], [Result], ['query']),
     'removeUserRecord' : IDL.Func([email], [], []),
-    'updateUserRecord' : IDL.Func([email, UserRecord], [], []),
+    'updateUserRecord' : IDL.Func([UserRecord], [], []),
   });
 };
 export const init = ({ IDL }) => { return []; };
