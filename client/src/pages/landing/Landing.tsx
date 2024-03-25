@@ -4,8 +4,8 @@ const LandingPage = () => {
   return (
     <div className=" min-h-screen bg-gradient-to-t from-black to-green-500 overflow-hidden flex-col flex items-center">
       <img
-        className="w-[330px] h-[330px]"
-        src="/green-icon.svg"
+        className="w-[300px] h-[300px]"
+        src="/i.c.logo2.png"
         alt="impact chain logo"
       />
       <div className="flex flex-col items-center justify-center md:text-7xl text-5xl">
