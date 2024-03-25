@@ -5,24 +5,18 @@ export const idlFactory = ({ IDL }) => {
     'platform' : IDL.Text,
     'ipAdress' : IDL.Text,
   });
-  const WaterEffiency = IDL.Record({
-    'waterEfficiencyGoal' : IDL.Opt(IDL.Text),
-    'waterStatemet' : IDL.Opt(IDL.Text),
-    'iotDevice' : IDL.Opt(IOTDevice),
-  });
-  const WaterDischarge = IDL.Record({
-    'waterDischargeGoal' : IDL.Opt(IDL.Text),
-    'waterDischargePermit' : IDL.Opt(IDL.Text),
+  const TargetRecords = IDL.Record({
+    'documents' : IDL.Opt(IDL.Vec(IDL.Text)),
+    'goal' : IDL.Opt(IDL.Text),
     'iotDevice' : IDL.Opt(IOTDevice),
   });
   const ImpactTarget = IDL.Record({
-    'id' : IDL.Text,
+    'id' : IDL.Nat,
     'name' : IDL.Text,
-    'measurements' : IDL.Vec(IDL.Text),
+    'targetRecords' : IDL.Opt(TargetRecords),
+    'measurements' : IDL.Opt(IDL.Vec(IDL.Text)),
   });
   const UserRecord = IDL.Record({
-    'waterEffiency' : IDL.Opt(WaterEffiency),
-    'waterDischarge' : IDL.Opt(WaterDischarge),
     'aboutCompany' : IDL.Record({
       'logo' : IDL.Opt(IDL.Text),
       'name' : IDL.Text,
@@ -30,7 +24,7 @@ export const idlFactory = ({ IDL }) => {
       'industry' : IDL.Text,
     }),
     'email' : IDL.Text,
-    'impactTarget' : IDL.Opt(IDL.Vec(ImpactTarget)),
+    'impactTargets' : IDL.Opt(IDL.Vec(ImpactTarget)),
   });
   const email = IDL.Text;
   const Result = IDL.Variant({ 'ok' : UserRecord, 'err' : IDL.Text });

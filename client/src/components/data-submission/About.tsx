@@ -43,9 +43,7 @@ const About = () => {
           industry: industry,
         },
         email: userInfo.email,
-        waterDischarge: [],
-        waterEffiency: [],
-        impactTarget: [],
+        impactTargets: [],
       };
       await dataActor?.addUserRecord(data);
       dispatch(setUserRecord(data));
