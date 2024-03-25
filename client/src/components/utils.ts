@@ -7,5 +7,14 @@ export const isDataIncomplete = (info: UserRecord) => {
   if (info.impactTargets.length === 0) {
     return "ImpactTarget";
   }
+  let withoutMeasurements = 0;
+  for (const target of info.impactTargets[0]) {
+    if (target.measurements.length === 0) {
+      withoutMeasurements++;
+    }
+  }
+  if (withoutMeasurements > 0) {
+    return "Measurements";
+  }
   return "ok";
 };

@@ -7,6 +7,7 @@ import SubmitData from "./data-submission/SubmitData";
 import { setDataComponent, setShowDataForm, setUserRecord } from "../redux/slices/app";
 import { useAuth } from "../hooks/AppContext";
 import { isDataIncomplete } from "./utils";
+import { ImpactTarget, UserRecord } from "../hooks/declarations/impact_chain_data/impact_chain_data.did";
 
 const Header = () => {
   const { 
@@ -49,7 +50,18 @@ const Header = () => {
         const res = await dataActor?.getUserRecord(userInfo.email);
         if (res) {
           if ("ok" in res) {
-            dispatch(setUserRecord(res.ok));
+            const convertedImpactTargets: ImpactTarget[] = res.ok.impactTargets.map(targetArray => 
+              targetArray.map(target => ({
+                ...target,
+                id: Number(target.id),
+              }))
+            );
+            
+            const convertedUserRecord: UserRecord = {
+              ...res.ok,
+              impactTargets: [convertedImpactTargets],
+            };
+            dispatch(setUserRecord(convertedUserRecord));
             const _res = isDataIncomplete(res.ok);
              if (_res !== "ok") {
               console.log("Data is incomplete", _res);
