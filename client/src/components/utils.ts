@@ -4,14 +4,17 @@ export const isDataIncomplete = (info: UserRecord) => {
   if (info.aboutCompany.logo.length === 0) {
     return "ProfileLogo";
   }
-  if (info.impactTarget.length === 0) {
+  if (info.impactTargets.length === 0) {
     return "ImpactTarget";
   }
-  if (info.waterEffiency.length === 0) {
-    return "waterEffiencyMissing";
+  let withoutMeasurements = 0;
+  for (const target of info.impactTargets[0]) {
+    if (target.measurements.length === 0) {
+      withoutMeasurements++;
+    }
   }
-  if (info.waterDischarge.length === 0) {
-    return "waterDischargeMissing";
+  if (withoutMeasurements > 0) {
+    return "Measurements";
   }
   return "ok";
 };

@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import ImpactTarget from "./ImpactTarget";
+import Measurements from "./Measurements";
 
 
 const SubmitData= () => {
@@ -23,6 +24,7 @@ const SubmitData= () => {
               {dataComponent === "About" && <About />}
               {dataComponent === "ProfileLogo" && <ProfileLogo />}
               {dataComponent === "ImpactTarget" && <ImpactTarget />}
+              {dataComponent === "Measurements" && <Measurements />}
             </div>
           </div>
         </div>

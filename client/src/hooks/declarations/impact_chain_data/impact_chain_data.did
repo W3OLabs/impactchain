@@ -1,16 +1,4 @@
 type email = text;
-type WaterEffiency = 
- record {
-   iotDevice: opt IOTDevice;
-   waterEfficiencyGoal: opt text;
-   waterStatemet: opt text;
- };
-type WaterDischarge = 
- record {
-   iotDevice: opt IOTDevice;
-   waterDischargeGoal: opt text;
-   waterDischargePermit: opt text;
- };
 type UserRecord = 
  record {
    aboutCompany:
@@ -21,9 +9,13 @@ type UserRecord =
       name: text;
     };
    email: text;
-   impactTarget: opt vec ImpactTarget;
-   waterDischarge: opt WaterDischarge;
-   waterEffiency: opt WaterEffiency;
+   impactTargets: opt vec ImpactTarget;
+ };
+type TargetRecords = 
+ record {
+   documents: opt vec text;
+   goal: opt text;
+   iotDevice: opt IOTDevice;
  };
 type Result = 
  variant {
@@ -32,9 +24,10 @@ type Result =
  };
 type ImpactTarget = 
  record {
-   id: text;
-   measurements: vec text;
+   id: nat;
+   measurements: opt vec text;
    name: text;
+   targetRecords: opt TargetRecords;
  };
 type IOTDevice = 
  record {

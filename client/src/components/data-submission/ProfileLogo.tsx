@@ -10,6 +10,7 @@ const ProfileLogo = () => {
   const dispatch = useDispatch();
   const [logo, setLogo] = useState<File | null>(null);
   const [logourl, setLogoUrl] = useState<string>("");
+  const [loading, setLoading] = useState(false);
   const { userRecord, storageInitiated } = useSelector(
     (state: RootState) => state.app
   );
@@ -33,6 +34,7 @@ const ProfileLogo = () => {
   const handleSubmit = async () => {
     if (userRecord) {
       try {
+        setLoading(true);
         const url = await uploadAsset();
         if (!url) {
           console.error("Error uploading logo");
@@ -46,7 +48,9 @@ const ProfileLogo = () => {
         dispatch(setUserRecord(updatedRecord));
         dispatch(setDataComponent("ImpactTarget"));
       } catch (error) {
+        setLoading(false);
         console.log("Error setting company info", error);
+
       }
     }
   };
@@ -115,7 +119,7 @@ const ProfileLogo = () => {
             logourl ? "bg-custom-green" : "bg-green-700"
           } px-10 py-1.5  rounded-full text-black font-bold`}
         >
-          Save & Continue
+       {loading ? "Loading..." : "Save & Continue"}
         </button>
         <button onClick={handleNext}>
           <span className="text-custom-green">Skip</span>

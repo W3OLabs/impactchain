@@ -9,15 +9,19 @@ export interface IOTDevice {
   'ipAdress' : string,
 }
 export interface ImpactTarget {
-  'id' : string,
+  'id' : bigint,
   'name' : string,
-  'measurements' : Array<string>,
+  'targetRecords' : [] | [TargetRecords],
+  'measurements' : [] | [Array<string>],
 }
 export type Result = { 'ok' : UserRecord } |
   { 'err' : string };
+export interface TargetRecords {
+  'documents' : [] | [Array<string>],
+  'goal' : [] | [string],
+  'iotDevice' : [] | [IOTDevice],
+}
 export interface UserRecord {
-  'waterEffiency' : [] | [WaterEffiency],
-  'waterDischarge' : [] | [WaterDischarge],
   'aboutCompany' : {
     'logo' : [] | [string],
     'name' : string,
@@ -25,17 +29,7 @@ export interface UserRecord {
     'industry' : string,
   },
   'email' : string,
-  'impactTarget' : [] | [Array<ImpactTarget>],
-}
-export interface WaterDischarge {
-  'waterDischargeGoal' : [] | [string],
-  'waterDischargePermit' : [] | [string],
-  'iotDevice' : [] | [IOTDevice],
-}
-export interface WaterEffiency {
-  'waterEfficiencyGoal' : [] | [string],
-  'waterStatemet' : [] | [string],
-  'iotDevice' : [] | [IOTDevice],
+  'impactTargets' : [] | [Array<ImpactTarget>],
 }
 export type email = string;
 export interface _SERVICE {
