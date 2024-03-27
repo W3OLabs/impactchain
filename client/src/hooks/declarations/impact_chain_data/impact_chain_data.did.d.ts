@@ -8,21 +8,18 @@ export interface IOTDevice {
   'platform' : string,
   'ipAdress' : string,
 }
-export interface ImpactTarget {
-  length: number;
-  slice(currentIndex: number, arg1: number): unknown;
-  map(arg0: (target: any, index: any) => import("react/jsx-runtime").JSX.Element): any;
-  'id' : bigint,
-  'name' : string,
-  'targetRecords' : [] | [TargetRecords],
-  'measurements' : [] | [Array<string>],
-}
 export type Result = { 'ok' : UserRecord } |
   { 'err' : string };
 export interface TargetRecords {
   'documents' : [] | [Array<string>],
   'goal' : [] | [string],
   'iotDevice' : [] | [IOTDevice],
+}
+export interface ImpactTarget {
+  'id' : bigint,
+  'name' : string,
+  'targetRecords' : [] | [TargetRecords],
+  'measurements' : [] | [Array<string>],
 }
 export interface UserRecord {
   'aboutCompany' : {
