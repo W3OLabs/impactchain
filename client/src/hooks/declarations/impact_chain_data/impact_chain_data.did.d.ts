@@ -9,6 +9,9 @@ export interface IOTDevice {
   'ipAdress' : string,
 }
 export interface ImpactTarget {
+  length: number;
+  slice(currentIndex: number, arg1: number): unknown;
+  map(arg0: (target: any, index: any) => import("react/jsx-runtime").JSX.Element): any;
   'id' : bigint,
   'name' : string,
   'targetRecords' : [] | [TargetRecords],

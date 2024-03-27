@@ -49,7 +49,7 @@ const Sidebar = () => {
               to="/home"
             >
               <div className="flex items-center justify-center gap-2">
-                <img src="/green-icon.svg" alt="logo" className="w-10 h-10" />
+                <img src="/i.c.logo2.png" alt="logo" className="w-10 h-10" />
                 <h4 className="text-2xl">
                   <span className="text-custom-green">impact.</span>chain
                 </h4>
@@ -269,7 +269,7 @@ const Sidebar = () => {
                   `}
                 >
                   <img
-                    src="/Seedling.svg"
+                    src="/seedling.svg"
                     alt="carbon-credits-icon"
                     className="w-7 h-7"
                   />
